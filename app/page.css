@@ -112,7 +112,7 @@
   }
 
   .game-info li {
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -120,7 +120,7 @@
   }
 
   .game-info button {
-    margin-top: 5px;
+    margin-top: 2px;
     background-color: var(--primary-color);
     color: var(--background-color);
     border: none;
@@ -131,9 +131,31 @@
     transition: background-color 0.3s, color 0.3s;
   }
 
+  .game-info p {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
   .game-info button:hover {
     background-color: var(--secondary-color);
   }
+
+  .github-icon {
+    color: var(--foreground-color);
+    font-size: 24px;
+    transition: color 0.3s;
+  }
+
+  .github-icon:hover {
+    color: var(--secondary-color);
+  }
+
+
 
   /* Media Queries */
 
