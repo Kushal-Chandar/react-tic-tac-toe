@@ -20,4 +20,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Deployment
 
-Deployed to vercel at
+Deployed to vercel at [React-Tic-Tac-Toe](https://react-tic-tac-toe-kushal-chandar.vercel.app/)
