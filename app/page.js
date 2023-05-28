@@ -3,9 +3,9 @@
 import "./page.css";
 import React, { useState } from "react";
 
-function Square({ data, onSquareClick }) {
+function Square({ data, onSquareClick, styleClass }) {
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button className={styleClass} onClick={onSquareClick}>
       {data}
     </button>
   );
@@ -25,7 +25,7 @@ function calculateWinner(board) {
   for (let line = 0; line < lines.length; line++) {
     const [a, b, c] = lines[line];
     if (board[a] && board[a] === board[b] && board[b] === board[c]) {
-      return board[a];
+      return [a, b, c];
     }
   }
   let draw = true;
@@ -44,9 +44,35 @@ function Board({ xTurn, squares, onPlay }) {
     if (squares[i] || winner) {
       return;
     }
+    console.log(Math.floor(i / 3), i % 3);
     const nextSquares = squares.slice();
     nextSquares[i] = xTurn ? "X" : "O";
     onPlay(nextSquares);
+  }
+
+  const board = [];
+  for (let row = 0; row < 3; row++) {
+    const boardRow = [];
+    for (let square = 0; square < 3; square++) {
+      const index = row * 3 + square;
+      boardRow.push(
+        <Square
+          key={index}
+          data={squares[index]}
+          onSquareClick={() => handleClick(index)}
+          styleClass={
+            winner != null && winner.includes(index)
+              ? "winning-square"
+              : "square"
+          }
+        />
+      );
+    }
+    board.push(
+      <div className="board-row" key={row}>
+        {boardRow}
+      </div>
+    );
   }
 
   return (
@@ -55,24 +81,10 @@ function Board({ xTurn, squares, onPlay }) {
         {winner
           ? winner === "Draw"
             ? "Draw"
-            : "Winner: " + winner
+            : "Winner: " + squares[winner[0]]
           : "Next player: " + (xTurn ? "X" : "O")}
       </div>
-      <div className="board-row">
-        <Square data={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square data={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square data={squares[2]} onSquareClick={() => handleClick(2)} />
-      </div>
-      <div className="board-row">
-        <Square data={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square data={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square data={squares[5]} onSquareClick={() => handleClick(5)} />
-      </div>
-      <div className="board-row">
-        <Square data={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square data={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square data={squares[8]} onSquareClick={() => handleClick(8)} />
-      </div>
+      {board}
     </>
   );
 }
@@ -84,6 +96,8 @@ export default function App() {
   };
   const [currentMove, setCurrentMove] = useState(initialState.currentMove);
   const [history, setHistory] = useState(initialState.history);
+  const [descending, setDescending] = useState(false);
+
   const xTurn = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -117,9 +131,6 @@ export default function App() {
         <Board xTurn={xTurn} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{moves}</ol>
-      </div>
-      <div className="game-info">
         <button
           onClick={() => {
             setCurrentMove(initialState.currentMove);
@@ -128,6 +139,16 @@ export default function App() {
         >
           Reset
         </button>
+        <button
+          onClick={() => {
+            setDescending(!descending);
+          }}
+        >
+          Sort move list
+        </button>
+      </div>
+      <div className="game-info">
+        <ol>{descending ? moves.reverse() : moves}</ol>
       </div>
     </div>
   );

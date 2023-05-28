@@ -59,7 +59,8 @@
 
   /* Square */
 
-  .square {
+  .square,
+  .winning-square {
     background-color: var(--primary-color);
     color: var(--background-color);
     border: 1px solid var(--secondary-color);
@@ -82,6 +83,13 @@
     cursor: not-allowed;
     background-color: var(--background-color);
     color: var(--foreground-color);
+  }
+
+  /* Highlight Winning Squares */
+
+  .winning-square {
+    background-color: var(--secondary-color);
+    color: var(--background-color);
   }
 
   /* Board Row */
@@ -108,6 +116,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    width: 200px; /* Add a fixed width to the list items */
   }
 
   .game-info button {
@@ -129,7 +138,8 @@
   /* Media Queries */
 
   @media screen and (max-width: 768px) {
-    .square {
+    .square,
+    .winning-square {
       width: 70px;
       height: 70px;
       font-size: 18px;
@@ -142,7 +152,8 @@
   }
 
   @media screen and (max-width: 480px) {
-    .square {
+    .square,
+    .winning-square {
       width: 60px;
       height: 60px;
       font-size: 16px;
